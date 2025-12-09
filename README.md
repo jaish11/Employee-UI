@@ -1,3 +1,11 @@
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/58bdef2a-c95f-4464-9fbe-caf1d9f282a0" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/ca01cfa1-7816-4295-b02c-85a007e032dc" />
+![Uploading image.png…]()
+
+
+
+
+
 # Employee
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.15.
