@@ -1,0 +1,182 @@
+<div class="container mt-4">
+  <h2 class="mb-3 text-center">Employee Management</h2>
+
+  <!-- Form Card -->
+  <div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <span>{{ isEditMode ? "Edit Employee" : "Add Employee" }}</span>
+      <button
+        *ngIf="isEditMode"
+        class="btn btn-sm btn-secondary"
+        (click)="resetForm()"
+      >
+        Cancel Edit
+      </button>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <!-- Name -->
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="name"
+              [ngClass]="{
+                'is-invalid': f['name'].touched && f['name'].invalid
+              }"
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="f['name']
+.touched && f['name']
+.errors?.['required']"
+            >
+              Name is required.
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              formControlName="email"
+              [ngClass]="{
+                'is-invalid': f['email'].touched && f['email'].invalid
+              }"
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="f['email']
+.touched && f['email']
+.errors?.['required']"
+            >
+              Email is required.
+            </div>
+            <div
+              class="invalid-feedback"
+              *ngIf="f['email']
+.touched && f['email']
+.errors?.['email']"
+            >
+              Enter a valid email.
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Department -->
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Department</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="department"
+              [ngClass]="{
+                'is-invalid': f['department'].touched && f['department'].invalid
+              }"
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="f['department']
+.touched && f['department']
+.errors?.['required']"
+            >
+              Department is required.
+            </div>
+          </div>
+
+          <!-- Salary -->
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Salary</label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="salary"
+              [ngClass]="{
+                'is-invalid': f['salary'].touched && f['salary'].invalid
+              }"
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="f['salary']
+.touched && f['salary']
+.errors?.['required']"
+            >
+              Salary is required.
+            </div>
+            <div
+              class="invalid-feedback"
+              *ngIf="f['salary']
+.touched && f['salary']
+.errors?.['min']"
+            >
+              Salary must be greater than 0.
+            </div>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="employeeForm.invalid || isLoading"
+        >
+          {{ isEditMode ? "Update" : "Add" }} Employee
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="text-center mb-3">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Employees Table -->
+  <div class="card">
+    <div class="card-header">Employee List</div>
+    <div class="card-body p-0">
+      <table class="table table-striped mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>S/N</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Department</th>
+            <th>Salary</th>
+            <th style="width: 220px">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let emp of employees; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ emp.name }}</td>
+            <td>{{ emp.email }}</td>
+            <td>{{ emp.department }}</td>
+            <td>{{ emp.salary }}</td>
+            <td>
+              <button class="btn btn-sm btn-info me-2" (click)="onView(emp)">
+                View
+              </button>
+              <button class="btn btn-sm btn-warning me-2" (click)="onEdit(emp)">
+                Edit
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="onDelete(emp)">
+                Delete
+              </button>
+            </td>
+          </tr>
+
+          <tr *ngIf="employees.length === 0 && !isLoading">
+            <td colspan="6" class="text-center py-3">No employees found.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
